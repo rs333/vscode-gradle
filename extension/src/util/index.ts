@@ -7,7 +7,8 @@ import { RootProject } from "../rootProject";
 export const isTest = (): boolean => process.env.VSCODE_TEST?.toLowerCase() === "true";
 
 // some run application tasks require a lot of time to start. So we should set a loose timeout.
-const maximumTimeout = 60000; // ms
+const config = vscode.workspace.getConfiguration("gradle");
+const maximumTimeout = config.get<number>("maximumTimeout", 60000); // ms
 const tcpTimeout = 300; // ms
 
 function tcpExists(host: string, port: number): Promise<boolean> {
